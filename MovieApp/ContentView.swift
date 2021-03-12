@@ -11,7 +11,12 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text("Hello, world!")
-                
+                // life cycle
+                .onAppear{
+                    HTTPClient().getMoviesBy(search: "batman"){result in
+                        print(result)
+                    }
+                }
         }
         
     }
