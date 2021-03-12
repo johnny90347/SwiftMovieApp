@@ -15,6 +15,13 @@ struct ContentView: View {
                 .onAppear{
                     HTTPClient().getMoviesBy(search: "batman"){result in
                         print(result)
+                        switch result {
+                        case .success(let movies):
+                            print(movies)
+                        case .failure(let error):
+                            print(error)
+                        }
+                        
                     }
                 }
         }
