@@ -15,6 +15,26 @@ enum NetworkError:Error {
 
 class HTTPClient{
     
+    func getMovieDetailsBy(imdbId:String,completion:@escaping (Result<MovieDetail,NetworkError>)->Void){
+        
+        guard let url = URL.forMoviesByImdbId(imdbId) else{
+            return completion(.failure(.badUrl))
+        }
+        URLSession.shared.dataTask(with: url) { (data, resp, error) in
+            guard let data = data , error == nil else{
+                return completion(.failure(.noData))
+            }
+            
+            guard let movieDetail = try? JSONDecoder().decode(MovieDetail.self, from: data)else{
+                return completion(.failure(.decodingError))
+            }
+            
+            completion(.success(movieDetail))
+        }.resume();
+        
+        
+    }
+    
     // completion handel 是一個call back,請求完成後要做的事情, Result 是 swift 5 的語法,要提供成功或失敗的類型
     func getMoviesBy(search:String,completion:@escaping (Result<[Movie]?,NetworkError>)-> Void) {
         

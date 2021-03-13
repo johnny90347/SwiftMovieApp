@@ -14,7 +14,11 @@ struct MovieListView: View {
     
     var body: some View {
         List(self.movies,id:\.imdbId){ movie in
-            MovieCell(movie: movie)// 使整個HStack 可以點選,不然空白處選不到
+            // 為了要跳轉
+            NavigationLink(
+                destination: MovieDetailScreen(imdbId: movie.imdbId)){
+                MovieCell(movie: movie)// 使整個HStack 可以點選,不然空白處選不到
+            }
         }
     }
 }
