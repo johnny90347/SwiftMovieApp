@@ -14,20 +14,7 @@ struct MovieListView: View {
     
     var body: some View {
         List(self.movies,id:\.imdbId){ movie in
-            HStack(alignment: .top) {
-                URLImage(url: movie.poster)
-                    .frame(width: 100, height: 120)
-                    .cornerRadius(6)
-                VStack(alignment: .leading) {
-                    Text(movie.title)
-                        .font(.headline)
-                    
-                    Text(movie.year)
-                        .opacity(0.5)
-                        .padding(.top, 10)
-                }.padding(5)
-                Spacer()
-            }.contentShape(Rectangle())
+            MovieCell(movie: movie)// 使整個HStack 可以點選,不然空白處選不到
         }
     }
 }
@@ -38,3 +25,25 @@ struct MovieListView: View {
 //        MovieListView()
 //    }
 //}
+
+struct MovieCell: View {
+    
+    let movie:MovieViewModel
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            URLImage(url: movie.poster)
+                .frame(width: 100, height: 120)
+                .cornerRadius(6)
+            VStack(alignment: .leading) {
+                Text(movie.title)
+                    .font(.headline)
+                
+                Text(movie.year)
+                    .opacity(0.5)
+                    .padding(.top, 10)
+            }.padding(5)
+            Spacer()
+        }.contentShape(Rectangle())
+    }
+}
